@@ -6,11 +6,14 @@ struct AppView: View {
     
     var body: some View {
         TabView {
-            Text("Places")
-                .tabItem {
-                    Image(systemName: "map")
-                    Text("Places")
-                }
+            PlacesListView(
+                store: store.scope(state: \.places,
+                                   action: \.places)
+            )
+            .tabItem {
+                Image(systemName: "map")
+                Text("Places")
+            }
         }
     }
 }
