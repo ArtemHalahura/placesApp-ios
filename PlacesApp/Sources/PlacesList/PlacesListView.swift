@@ -11,6 +11,9 @@ struct PlacesListView: View {
                     .padding()
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .onTapGesture {
+                        store.send(.openURL(place))
+                    }
             }
             
             .listRowSeparator(.hidden)
