@@ -5,34 +5,41 @@ struct PlacesListView: View {
     let store: StoreOf<PlacesListReducer>
     
     var body: some View {
-        List(store.places) { place in
-            GroupBox {
-                Text(place.name)
-                    .padding()
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .onTapGesture {
-                        store.send(.openURL(place))
+        NavigationStack {
+            List(store.places) { place in
+                GroupBox {
+                    Text(place.name)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    HStack {
+                        Text("\(place.lat)")
+                        Text("\(place.long)")
                     }
+                    .font(.caption2)
+                    .foregroundStyle(.gray)
+                }
+                .onTapGesture {
+                    store.send(.openURL(place))
+                }
+                
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+            } .overlay {
+                if store.isLoading {
+                    ProgressView()
+                        .padding()
+                        .background(.black.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
+                }
             }
-            
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
-        } .overlay {
-            if store.isLoading {
-                ProgressView()
-                    .padding()
-                    .background(.black.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
-            }
+            .navigationTitle("Places")
+            .listStyle(.plain)
+            .padding()
         }
-        .navigationTitle("Places")
-        .listStyle(.plain)
         .onAppear {
             if store.places.isEmpty {
                 store.send(.fetchPlaces)
             }
         }
-        .padding()
     }
 }
 
