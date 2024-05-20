@@ -6,6 +6,7 @@ This project is built using SwiftUI and follows the Composable Architecture patt
 ## Features
 - **SwiftUI**
 - **Composable Architecture**: Implements the Composable Architecture for better state management and scalability.
+- **Swift Concurrency**
 
 ## Requirements
 - **iOS 16.0+**
